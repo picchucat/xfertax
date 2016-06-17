@@ -4,22 +4,23 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foundation for Sites</title>
+    <title>xfertax</title>
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/daterangepicker-f5.css">
     <script type="text/javascript" src="js/vendor/jquery.js"></script>
     <script type="text/javascript" src="js/vendor/moment.min.js"></script>
     <script type="text/javascript" src="js/vendor/daterangepicker.js"></script>
+    <script type="text/javascript" src="js/xfer.js"></script>
   </head>
   <body>
     <div class="row xfer">
       <div class="small-12 columns">
-        <div class="primary callout">
+        <div class="panel callout radius">
           <div class="row">
             <div class="small-4 columns">
               <label>Tax Stamp
-                <input type="text" placeholder="Dollar Amount">
+                <input type="text" placeholder="Dollar Amount" id="tax1">
               </input>
             </div>
             <div class="small-4 columns">
@@ -28,17 +29,19 @@
               </label>
             </div>
             <div class="small-4 columns">
-              Calculated Sale Price
+              Calculated Sale Price</br>
+              <span id="sale1"></span>
             </div>
           </div>
         </div>
       </div>
       <hr></hr>
       <div class="small-12 columns">
-        <div class="primary callout">
+        <div class="panel callout radius">
           <div class="row">
             <div class="small-4 columns">
-              Calculated Transfer Tax
+              Calculated Transfer Tax:</br>
+              <span id="tax2"></span>
             </div>
             <div class="small-4 columns">
               <label>Date
@@ -47,7 +50,7 @@
             </div>
             <div class="small-4 columns">
               <label>Sale Price
-                <input type="text" placeholder="Dollar Amount">
+                $<input type="text" placeholder="Dollar Amount" id="sale2">
               </label>
             </div>
           </div>
@@ -58,11 +61,36 @@
     $(document).ready(function() {
       $('#date1').daterangepicker(
           {
-          format: 'YYYY-MM-DD',
-          startDate: '2013-01-01',
-          endDate: '2016-01-01'
+          singleDatePicker: true,
+          showDropdowns: true,
+          format: 'MM-DD-YYYY',
+          minDate: '01-01-1800',
+          maxDate: moment().format('MM-DD-YYYY')
+          },
+          function(start, end, label) {
+            console.log('A new date was picked: ' + start.format('MM-DD-YYYY'))
           }
       );
+      $('#date2').daterangepicker(
+          {
+          singleDatePicker: true,
+          showDropdowns: true,
+          format: 'MM-DD-YYYY',
+          minDate: '01-01-1800',
+          maxDate: moment().format('MM-DD-YYYY')
+          },
+          function(start, end, label) {
+            var sale2 = parseInt(($('#sale2').val()), 10);
+            var date2 = moment($('#date2').val(), 'MM-DD-YYYY');
+            calculatexfertax(date2, sale2)
+          }
+      );
+      // Change handlers for xfer tax and sale price fields
+      $('#sale2').on('change keyup paste', function() {
+        var sale2 = parseInt(($('#sale2').val()), 10);
+        var date2 = moment($('#date2').val(), 'MM-DD-YYYY');
+        calculatexfertax(date2, sale2)
+      });
       console.log("test");
     });
     </script>
