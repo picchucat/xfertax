@@ -112,7 +112,7 @@ var calculatesaleprice = function (date, xfertax) {
     $('#sale1').html('That&apos;s a valid date, NOT!');
   }
   else if (isNaN(xfertax) || (xfertax == 0) || (xfertax < 0)) {
-    $('#sale1').html('Want to give me a transfer tax, like, today?');
+    $('#sale1').html('Aw, crap!  You need to enter a transfer tax!');
   }
   else if ( (date >= moment('1932-06-21')) && (date <= moment('1940-06-30')) ) {
     var saleprice = Math.ceil(xfertax / .001);
