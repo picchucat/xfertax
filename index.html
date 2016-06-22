@@ -122,6 +122,10 @@
           $('#date2').data('daterangepicker').hide();
         }
       });
+      // Default date fileds to today - datepicker doesn't recognize clicking
+      // today's date after initial load.
+      $('#date1').val(moment().format('MM-DD-YYYY'));
+      $('#date2').val(moment().format('MM-DD-YYYY'));
     });
     </script>
   </body>
