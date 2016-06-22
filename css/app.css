@@ -7,3 +7,19 @@
   top: 50%;
   left: 50%;
 }
+
+/* Some foundation overrides - yeah I should've just used Sass */
+
+body {
+  background: #fdf6e3;
+}
+.panel.callout {
+  background: #eee8d5;
+  color: #657b83;
+}
+label {
+  color: #657b83;
+}
+input[type="text"] {
+  color: #6c71c4;
+}

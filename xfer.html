@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>xfertax</title>
+    <title>The insulting transfer tax calculator</title>
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/daterangepicker-f5.css">
@@ -25,11 +25,11 @@
             </div>
             <div class="small-4 columns">
               <label>Date
-                <input type="text" id="date1">
+                <input type="text" id="date1" placeholder="MM-DD-YYYY">
               </label>
             </div>
             <div class="small-4 columns">
-              Calculated Sale Price</br>
+              Calculated Sale Price:</br>
               <span id="sale1"></span>
             </div>
           </div>
@@ -45,7 +45,7 @@
             </div>
             <div class="small-4 columns">
               <label>Date
-                <input type="text" id="date2">
+                <input type="text" id="date2" placeholder="MM-DD-YYYY">
               </label>
             </div>
             <div class="small-4 columns">
@@ -65,10 +65,14 @@
           showDropdowns: true,
           format: 'MM-DD-YYYY',
           minDate: '06-21-1932',
-          maxDate: moment().format('MM-DD-YYYY')
+          maxDate: moment().format('MM-DD-YYYY'),
+          startDate: moment().format('MM-DD-YYYY')
           },
           function(start, end, label) {
-            console.log('A new date was picked: ' + start.format('MM-DD-YYYY'))
+            var xfer1 = parseInt(($('#tax1').val()), 10);
+            var date1 = moment($('#date1').val(), 'MM-DD-YYYY');
+            calculatesaleprice(date1, xfer1)
+            // console.log('A new date was picked: ' + start.format('MM-DD-YYYY'))
           }
       );
       $('#date2').daterangepicker(
@@ -77,7 +81,8 @@
           showDropdowns: true,
           format: 'MM-DD-YYYY',
           minDate: '06-21-1932',
-          maxDate: moment().format('MM-DD-YYYY')
+          maxDate: moment().format('MM-DD-YYYY'),
+          startDate: moment().format('MM-DD-YYYY')
           },
           function(start, end, label) {
             var sale2 = parseInt(($('#sale2').val()), 10);
@@ -91,7 +96,28 @@
         var date2 = moment($('#date2').val(), 'MM-DD-YYYY');
         calculatexfertax(date2, sale2)
       });
-      console.log("test");
+      $('#tax1').on('change keyup paste', function() {
+        var xfer1 = parseFloat(($('#tax1').val()), 10);
+        var date1 = moment($('#date1').val(), 'MM-DD-YYYY');
+        calculatesaleprice(date1, xfer1)
+      });
+      // Focusout handlers for date fields, because picker does't close when
+      // text is typed manually.
+      // Code 9 is tab - keyCode and which are browser dependant methods to
+      // capture keystroke type.  Can't do it with .blur, because clicking
+      // on the picker will hide it without entering the date.
+      $('#date1').keydown(function(e) {
+        var code = e.keyCode || e.which;
+        if (code == 9) {
+          $('#date1').data('daterangepicker').hide();
+        }
+      });
+      $('#date2').keydown(function(e) {
+        var code = e.keyCode || e.which;
+        if (code == 9) {
+          $('#date2').data('daterangepicker').hide();
+        }
+      });
     });
     </script>
   </body>
