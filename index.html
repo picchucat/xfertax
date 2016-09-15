@@ -73,7 +73,7 @@
           startDate: moment().format('MM-DD-YYYY')
           },
           function(start, end, label) {
-            var xfer1 = parseInt(($('#tax1').val()), 10);
+            var xfer1 = parseFloat(($('#tax1').val()), 10);
             var date1 = moment($('#date1').val(), 'MM-DD-YYYY');
             calculatesaleprice(date1, xfer1)
             // console.log('A new date was picked: ' + start.format('MM-DD-YYYY'))
