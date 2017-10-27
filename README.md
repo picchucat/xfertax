@@ -10,3 +10,5 @@ for land transactions by date.
 docker build -t my-repo/my-image-name:my-version .
 
 docker run --name my-container -d my-repo/my-image-name:my-version
+
+asfas
